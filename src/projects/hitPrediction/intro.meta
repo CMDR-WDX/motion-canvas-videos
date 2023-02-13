@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "seed": 116432080,
+  "timeEvents": [
+    {
+      "name": "intro_start_talking",
+      "targetTime": 0.19659722222222206
+    }
+  ]
+}

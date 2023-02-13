@@ -1,8 +1,9 @@
 import {makeProject} from '@motion-canvas/core/lib';
 
-import scene from './hitPrediction/main?scene';
+import intro from './hitPrediction/intro?scene';
+import './hitPrediction/styles.css';
 
 export default makeProject({
-  scenes: [scene],
+  scenes: [intro],
   background: '#141414',
 });
