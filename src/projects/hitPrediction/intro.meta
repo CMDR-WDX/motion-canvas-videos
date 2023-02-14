@@ -5,6 +5,22 @@
     {
       "name": "intro_start_talking",
       "targetTime": 0.19659722222222206
+    },
+    {
+      "name": "intro_disclaimer",
+      "targetTime": 3.379010416666667
+    },
+    {
+      "name": "intro_disclaimer_not_scared",
+      "targetTime": 5.345042573587557
+    },
+    {
+      "name": "intro_what_hitprediction",
+      "targetTime": 6.868750484288928
+    },
+    {
+      "name": "intro_swipe_youtube",
+      "targetTime": 8.58839594818177
     }
   ]
 }
