@@ -13,9 +13,7 @@ Dangerous, a space sim based on newtonian physics which also has
 projectile-based combat.
 
 In Elite, when you try to shoot another target, the game will give you an
-indicator of where you have to shoot for the weapons to hit — assuming that the
-target does not change directions. Another space game, Star Citizen, also has
-that feature.
+indicator of where you have to shoot for the projectiles to hit.
 
 This will video will explore how one would go about implementing projectile
 predictions.
@@ -24,19 +22,19 @@ predictions.
 
 First, let's try to define what we actually want to achieve.
 
-We have our ship, we have a gun on our ship that can fire in all directions by
-turning the ship, and we have an enemy we want to hit.
+We have our ship, we have a gun on our ship that can fire in all, and we have an
+enemy we want to hit.
 
 Our main objective here it find the _direction_ we need to shoot to be able to
 hit a moving target, assuming it doesn't change its direction.
 
-We know our own speed and position, the enemies speed and position, and our
-gun's shot speed.
+We know the position and moving direction of both ourselves and the enemy, as
+well as our gun's shot speed.
 
 ### Simplifying the Problem
 
 Let's, for a second, assume that our ship is not moving at all, and that our gun
-doesn't just fire straight forward, but into all directions, at the same time.
+doesn't just into one direction, but into all directions, at the same time.
 
 You will quickly notice that a "ring" of bullets emerges from our ship. We can
 abstract all these bullets away as a simple circle expanding from our ship.
@@ -56,12 +54,12 @@ can also calculate **Where** the collision takes place.
 There is one flaw here, however.
 
 The Bullet inherits our ship's momentum – meaning… that if the ship is… say …
-flying to the side, the bullet will also fly to the side, even if it was flying
+flying to the side, the bullet will also fly to the side, even if it is shot
 straight up.
 
 Similarly, if the ship flying in reverse, the bullet's speed will be slower.
 
-This way, bullets no longer form a circle, but an ellipse — which means you
+This way, bullets no longer form a circle, but an ellipse — which means we
 cannot just use the distance between our ship and the enemy.
 
 There is however a simple trick to this: Changing the Frame of Reference.
@@ -84,7 +82,7 @@ We want to find out **when** the circle representing all possible bullets
 collides with the Enemy.
 
 For this we basically need to look at when the distance between our ship and the
-Enemy is the same as the distance between the circle and our ship.
+Enemy is the same as the radius of our circle.
 
 The _Pythagorean theorem_ is a simple way of figuring out the distance between
 two points. By taking the difference between two positions, multiplying each
@@ -92,7 +90,7 @@ component of the vector with itself, and then taking the root of the sum, you
 get the distance.
 
 We can figure out where the Enemy is at a certain time by adding its starting
-position and the travel direction multiplied with the time passed.
+position and the travel direction multiplied with the time that has passed.
 
 To get the distance of our bullet at a given time we can just multiply its speed
 with the passed time.
@@ -141,19 +139,18 @@ inside is negative you do not have a solution.
 
 ## Getting the position
 
-soo.. if you got a result, you now have the time of collision. Because you know
-the Enemies position and their current direction, you can multiply the direction
-with the time and add their position.
-
-And there you go... you found the point of collision.
+soo.. if you got a result, you now have the time of collision. By multiply it by
+the enemy's direction and adding the enemy's current position you can determine
+the point of collision.
 
 ## 3D
 
-There is one thing however... This entire video focuses on 2D. Elite and Star
-Citizen are, however, in 3D.
+There is one thing however... This entire video focuses on 2D. But what about
+3D?
 
 Well... 3D works just like 2D, you just need to add the new dimension whenever
-applicable.
+applicable. The _Pythagorean theorem_ doesn't care if you are using 2, 3, or
+even 100 dimensions.
 
 ## Code
 
