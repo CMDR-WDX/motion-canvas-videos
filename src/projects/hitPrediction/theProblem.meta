@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "seed": 518429864,
+  "timeEvents": [
+    {
+      "name": "problem_start_talk",
+      "targetTime": 0.7395355271372748
+    },
+    {
+      "name": "problem_gun_intro",
+      "targetTime": 5.593257794013014
+    },
+    {
+      "name": "problem_gun_spin_shot",
+      "targetTime": 7.243573204756984
+    },
+    {
+      "name": "problem_enemy_intro",
+      "targetTime": 9.589243610010598
+    },
+    {
+      "name": "problem_define_inputs",
+      "targetTime": 20.116666666666667
+    }
+  ]
+}

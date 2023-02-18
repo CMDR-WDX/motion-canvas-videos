@@ -7,20 +7,24 @@
       "targetTime": 0.19659722222222206
     },
     {
-      "name": "intro_disclaimer",
-      "targetTime": 3.379010416666667
-    },
-    {
       "name": "intro_disclaimer_not_scared",
-      "targetTime": 5.345042573587557
+      "targetTime": 4.269382851365332
     },
     {
       "name": "intro_what_hitprediction",
-      "targetTime": 6.868750484288928
+      "targetTime": 11.129340762066704
     },
     {
       "name": "intro_swipe_youtube",
-      "targetTime": 8.58839594818177
+      "targetTime": 13.314373634389012
+    },
+    {
+      "name": "intro_swipe_to_ed_broll",
+      "targetTime": 16.52438319444595
+    },
+    {
+      "name": "intro_broll_end",
+      "targetTime": 31.29218138019003
     }
   ]
 }

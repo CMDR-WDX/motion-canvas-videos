@@ -13,3 +13,9 @@ dist
 *.njsproj
 *.sln
 *.sw?
+# Video Files
+*.mp4
+*.mkv
+# Audacity
+*.aup3
+*.aup3-wal

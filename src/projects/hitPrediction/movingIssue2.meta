@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "seed": 688853282,
+  "timeEvents": [
+    {
+      "name": "move_origin",
+      "targetTime": 1.5
+    },
+    {
+      "name": "move_directions",
+      "targetTime": 2.5
+    }
+  ]
+}

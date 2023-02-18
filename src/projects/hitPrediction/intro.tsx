@@ -1,20 +1,9 @@
-import {
-  Image,
-  Layout,
-  Line,
-  Node,
-  Text,
-  View2D,
-} from '@motion-canvas/2d/lib/components';
+import {Image, Layout, Line, Node, Text, Video, View2D} from '@motion-canvas/2d/lib/components';
 import {blur, brightness} from '@motion-canvas/2d/lib/partials';
 import {makeScene2D} from '@motion-canvas/2d/lib/scenes';
 import {all, delay, waitFor, waitUntil} from '@motion-canvas/core/lib/flow';
 import {createSignal} from '@motion-canvas/core/lib/signals';
-import {
-  easeInOutQuint,
-  easeInOutSine,
-  easeOutBack,
-} from '@motion-canvas/core/lib/tweening';
+import {easeInOutQuint, easeInOutSine, easeOutBack} from '@motion-canvas/core/lib/tweening';
 import {createRef, Reference} from '@motion-canvas/core/lib/utils';
 
 import ytScreen from './img/intro/yt_screen.png';
@@ -26,6 +15,8 @@ import ytThumbShards from './img/intro/shards.jpg';
 import ytThumbSelenium from './img/intro/selenium.webp';
 import {Random} from '@motion-canvas/core/lib/scenes';
 import {Vector2} from '@motion-canvas/core/lib/types';
+
+import introBRoll from './video/broll.mp4';
 
 function* makeIntroTitle(scene: View2D, layoutRef: Reference<Layout>) {
   const firstLineStart = createSignal(0);
@@ -42,15 +33,7 @@ function* makeIntroTitle(scene: View2D, layoutRef: Reference<Layout>) {
   scene.add(
     <Layout ref={layoutRef}>
       <Node ref={titleFirstLineRef} cache>
-        <Text
-          position={[-500, -200]}
-          text={'Hit'}
-          textWrap="pre"
-          fontFamily={'Roboto'}
-          fill={'white'}
-          fontSize={300}
-          fontWeight={900}
-        />
+        <Text position={[-500, -200]} text={'Hit'} textWrap="pre" fontFamily={'Roboto'} fill={'white'} fontSize={300} fontWeight={900} />
         <Line
           compositeOperation={'source-out'}
           start={firstLineStart}
@@ -64,15 +47,7 @@ function* makeIntroTitle(scene: View2D, layoutRef: Reference<Layout>) {
         />
       </Node>
       <Node ref={titleSecondLineRef} cache>
-        <Text
-          position={[0, +100]}
-          text={'Prediction'}
-          textWrap="pre"
-          fontFamily={'Roboto'}
-          fill={'white'}
-          fontSize={300}
-          fontWeight={900}
-        />
+        <Text position={[0, +100]} text={'Prediction'} textWrap="pre" fontFamily={'Roboto'} fill={'white'} fontSize={300} fontWeight={900} />
         <Line
           compositeOperation={'source-out'}
           start={secondLineStart}
@@ -89,15 +64,7 @@ function* makeIntroTitle(scene: View2D, layoutRef: Reference<Layout>) {
       {/* Text for "after" the stroke is gone */}
 
       <Node opacity={secondLineMaskOpacity} cache>
-        <Text
-          position={[-500, -200]}
-          text={'Hit'}
-          textWrap="pre"
-          fontFamily={'Roboto'}
-          fill={'white'}
-          fontSize={300}
-          fontWeight={900}
-        />
+        <Text position={[-500, -200]} text={'Hit'} textWrap="pre" fontFamily={'Roboto'} fill={'white'} fontSize={300} fontWeight={900} />
         <Line
           compositeOperation={'destination-in'}
           start={0}
@@ -111,16 +78,7 @@ function* makeIntroTitle(scene: View2D, layoutRef: Reference<Layout>) {
         />
       </Node>
       <Node opacity={secondLineMaskOpacity} cache>
-        <Text
-          position={[0, +100]}
-          lineHeight={300}
-          text={'Prediction'}
-          textWrap="pre"
-          fontFamily={'Roboto'}
-          fill={'white'}
-          fontSize={300}
-          fontWeight={900}
-        />
+        <Text position={[0, +100]} lineHeight={300} text={'Prediction'} textWrap="pre" fontFamily={'Roboto'} fill={'white'} fontSize={300} fontWeight={900} />
         <Line
           compositeOperation={'destination-in'}
           start={0}
@@ -152,26 +110,10 @@ function* makeIntroTitle(scene: View2D, layoutRef: Reference<Layout>) {
 
 function* makeMathWarning(scene: View2D) {
   const mathWarning = (
-    <Layout
-      position={[350, 650]}
-      layout
-      opacity={0.5}
-      alignItems={'center'}
-      direction={'row'}
-    >
+    <Layout position={[350, 650]} layout opacity={0.5} alignItems={'center'} direction={'row'}>
       {/* removing line below fixes Rendering */}
-      <Image
-        size={100}
-        marginTop={-20}
-        marginRight={40}
-        src="https://api.iconify.design/material-symbols:warning-rounded.svg?color=%23f6f5f4"
-      />
-      <Text
-        fontSize={100}
-        lineHeight={100}
-        fill={'#f6f5f4'}
-        text={'Warning: Math ahead'}
-      />
+      <Image size={100} marginTop={-20} marginRight={40} src="https://api.iconify.design/material-symbols:warning-rounded.svg?color=%23f6f5f4" />
+      <Text fontSize={100} lineHeight={100} fill={'#f6f5f4'} text={'Warning: Math ahead'} />
     </Layout>
   );
 
@@ -186,35 +128,16 @@ function* makeMathWarning(scene: View2D) {
 
 export default makeScene2D(function* (scene) {
   const titleLayout = createRef<Layout>();
-  yield* makeIntroTitle(scene, titleLayout);
 
-  yield* waitUntil('intro_disclaimer');
-
-  yield* makeMathWarning(scene);
+  yield* all(makeIntroTitle(scene, titleLayout), delay(1, makeMathWarning(scene)));
 
   yield* waitUntil('intro_what_hitprediction');
 
   // Add quotes around text
   const quoteLeftSize = createSignal(0);
   const quoteRightSize = createSignal(0);
-  const quoteLeft = (
-    <Text
-      fill={'white'}
-      fontSize={quoteLeftSize}
-      lineHeight={() => (quoteLeftSize() == 0 ? 1 : quoteLeftSize())}
-      text="“"
-      position={[-780, -200]}
-    />
-  );
-  const quoteRight = (
-    <Text
-      fill={'white'}
-      fontSize={quoteRightSize}
-      lineHeight={() => (quoteRightSize() == 0 ? 1 : quoteRightSize())}
-      text="”"
-      position={[800, 100]}
-    />
-  );
+  const quoteLeft = <Text fill={'white'} fontSize={quoteLeftSize} lineHeight={() => (quoteLeftSize() == 0 ? 1 : quoteLeftSize())} text="“" position={[-780, -200]} />;
+  const quoteRight = <Text fill={'white'} fontSize={quoteRightSize} lineHeight={() => (quoteRightSize() == 0 ? 1 : quoteRightSize())} text="”" position={[800, 100]} />;
   titleLayout().add(
     <>
       {quoteLeft}
@@ -231,43 +154,14 @@ export default makeScene2D(function* (scene) {
   const ytScreenNodePrimaryFilterSlider = createSignal(0);
   scene.add(
     <Layout ref={ytScreenNode} position={[0, 1250]}>
-      <Image
-        ref={ytScreenNodePrimary}
-        filters={[
-          blur(ytScreenNodePrimaryFilterSlider),
-          brightness(() => 1 - ytScreenNodePrimaryFilterSlider() * 0.1),
-        ]}
-        src={ytScreen}
-      />
+      <Image ref={ytScreenNodePrimary} filters={[blur(ytScreenNodePrimaryFilterSlider), brightness(() => 1 - ytScreenNodePrimaryFilterSlider() * 0.1)]} src={ytScreen} />
     </Layout>,
   );
 
-  const thumbnailImages = [
-    ytThumbGoopTroop,
-    ytThumbDictor,
-    ytThumbMassacre,
-    ytThumbPower,
-    ytThumbShards,
-    ytThumbSelenium,
-  ].map((src, index) => (
-    <Image
-      antialiased
-      opacity={1}
-      src={src}
-      size={[210, 210 * (9 / 16)]}
-      position={[-417 + index * 213.6, -96]}
-    />
-  ));
+  const thumbnailImages = [ytThumbGoopTroop, ytThumbDictor, ytThumbMassacre, ytThumbPower, ytThumbShards, ytThumbSelenium].map((src, index) => <Image antialiased opacity={1} src={src} size={[210, 210 * (9 / 16)]} position={[-417 + index * 213.6, -96]} />);
   ytScreenNode().add(thumbnailImages);
 
-  yield* all(
-    yield titleLayout().position(
-      [titleLayout().position().x, -800],
-      1,
-      easeInOutQuint,
-    ),
-    yield ytScreenNode().position([0, 0], 1, easeInOutQuint),
-  );
+  yield* all(yield titleLayout().position([titleLayout().position().x, -800], 1, easeInOutQuint), yield ytScreenNode().position([0, 0], 1, easeInOutQuint));
 
   yield* waitFor(0.5);
 
@@ -277,33 +171,42 @@ export default makeScene2D(function* (scene) {
     yield el.scale(random.nextFloat(1.1, 3), 0.5, easeInOutQuint);
     yield el.rotation(random.nextFloat(-23, 20), 0.5, easeInOutQuint);
     const currentPos = el.position();
-    const newPosition = new Vector2(
-      currentPos.x + random.nextFloat(-20, 20),
-      currentPos.y + random.nextFloat(-200, 200),
-    );
+    const newPosition = new Vector2(currentPos.x + random.nextFloat(-20, 20), currentPos.y + random.nextFloat(-200, 200));
 
-    yield delay(
-      0.5,
-      yield el.position(newPosition, random.nextFloat(0.4, 0.5), easeInOutSine),
-    );
+    yield delay(0.5, yield el.position(newPosition, random.nextFloat(0.4, 0.5), easeInOutSine));
   }
 
   for (const thumb of thumbnailImages) {
     yield handleIndividualThumbnail(thumb as Image, random.nextInt());
   }
 
-  yield* waitFor(5);
+  yield* waitUntil('intro_swipe_to_ed_broll');
+  // Move thumbs and background upwards, reveal E:D b-roll
+
+  const thumbOutAnimation = [];
+  for (const thumb of thumbnailImages) {
+    thumbOutAnimation.push(thumb.position.y(random.nextInt(-900, -1000), 3, easeInOutQuint));
+  }
+  // create the B-Roll node, but move it to the start of the scene so it gets rendered in the back
+  const bRollBlur = createSignal(0);
+  const bRollVid: Video = (<Video filters={[blur(bRollBlur)]} opacity={0} src={introBRoll} />) as Video;
+  yield scene.insert(bRollVid);
+  bRollVid.play();
+  yield ytScreenNodePrimary().position.y(-(3 * 1080) / 2, 3, easeInOutQuint);
+  yield* all(...thumbOutAnimation, bRollVid.opacity(1, 1));
+  ytScreenNode().removeChildren();
+  ytScreenNode().remove();
+  yield* waitUntil('intro_broll_end');
+  yield bRollBlur(10, 0.5);
+  yield* bRollVid.opacity(0, 0.5);
+  yield bRollVid.pause();
 });
 
 function* handleIndividualThumbnail(node: Image, seed: number) {
   const random = new Random(seed);
   yield* waitFor(random.nextFloat(0, 0.5));
-  yield node.scale(1.5, 0.5),
-    yield node.rotation(random.nextInt(-20, 20), 0.5, easeInOutQuint);
+  yield node.scale(1.5, 0.5), yield node.rotation(random.nextInt(-20, 20), 0.5, easeInOutQuint);
   const currentPos = node.position();
-  const newPosition = new Vector2(
-    currentPos.x + random.nextFloat(-20, 20),
-    currentPos.y + random.nextFloat(-20, 20),
-  );
+  const newPosition = new Vector2(currentPos.x + random.nextFloat(-20, 20), currentPos.y + random.nextFloat(-20, 20));
   yield node.position(newPosition, random.nextFloat(0.1, 0.5));
 }

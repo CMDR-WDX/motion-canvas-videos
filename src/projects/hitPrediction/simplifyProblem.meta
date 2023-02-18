@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "seed": 550869512,
+  "timeEvents": [
+    {
+      "name": "simplify_bullet_forward",
+      "targetTime": 6.736868427959045
+    },
+    {
+      "name": "simplify_bullet_all_directions",
+      "targetTime": 7.6950673258137305
+    },
+    {
+      "name": "simplify_start_talk_collision",
+      "targetTime": 18.915366977211733
+    },
+    {
+      "name": "simplify_talk_equal_distance",
+      "targetTime": 23.83841971625483
+    },
+    {
+      "name": "simplify_talk_equal_radius",
+      "targetTime": 25.233864632975294
+    },
+    {
+      "name": "simply_talk_before_where",
+      "targetTime": 29.397821658327903
+    },
+    {
+      "name": "simply_talk_before_when",
+      "targetTime": 31.880589018562354
+    },
+    {
+      "name": "simply_where_flying_toward",
+      "targetTime": 35.88333333333333
+    }
+  ]
+}
